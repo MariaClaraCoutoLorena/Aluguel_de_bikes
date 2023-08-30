@@ -46,4 +46,9 @@ export class App {
         else  throw new Error('Bike não encontrada.')
     }
 
+    rentBike(bike: Bike, user: User ,startDate: Date, endDate: Date){
+        let rents_bike = this.rents.filter(rent => {rent.bike == bike})
+        let new_rent = Rent.create(rents_bike, bike, user, startDate, endDate )
+        this.rents.push(new_rent)
+    }
 }
