@@ -34,6 +34,11 @@ export class App {
         }
         this.bikes.push(bike)
     }
+    removeUser(user: User): void {
+        let index = this.users.indexOf(user)
+        if(index) this.users.splice(index,1)
+        else throw new Error('Usuário não encontrada.')
+    }
 
     removeBike(bike: Bike): void {
         let index = this.bikes.indexOf(bike)
