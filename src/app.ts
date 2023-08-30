@@ -1,6 +1,7 @@
 import { Bike } from "./bike";
 import { Rent } from "./rent";
 import { User } from "./user";
+import crypto from 'crypto';
 
 export class App {
     users: User[] = []
@@ -46,9 +47,16 @@ export class App {
         else  throw new Error('Bike não encontrada.')
     }
 
-    rentBike(bike: Bike, user: User ,startDate: Date, endDate: Date){
+    rentBike(bike: Bike, user: User ,startDate: Date, endDate: Date): void{
         let rents_bike = this.rents.filter(rent => {rent.bike == bike})
         let new_rent = Rent.create(rents_bike, bike, user, startDate, endDate )
         this.rents.push(new_rent)
     }
+
+    returnBike(bike: Bike, user: User ,startDate: Date, endDate: Date): void{
+        let rent_bike = this.rents.find(rent => {rent.bike == bike && rent.dateReturned==undefined})
+        if(rent_bike) rent_bike.dateReturned = new Date()
+        else throw new Error('Essa marca não estava reservada.')
+    }
+
 }
