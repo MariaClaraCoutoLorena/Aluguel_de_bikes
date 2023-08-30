@@ -17,6 +17,28 @@ export class App {
                 throw new Error('Duplicate user.')
             }
         }
+        user.id = crypto.randomUUID()
         this.users.push(user)
     }
+
+    registerBike(bike: Bike): void {
+        if(bike.id != null) {
+            for (const rBike of this.bikes) {
+                if (rBike.id === bike.id) {
+                    throw new Error('Duplicate Bike.')
+                }
+            }
+        }
+        else{
+            bike.id = crypto.randomUUID() 
+        }
+        this.bikes.push(bike)
+    }
+
+    removeBike(bike: Bike): void {
+        let index = this.bikes.indexOf(bike)
+        if(index) this.bikes.splice(index,1)
+        else  throw new Error('Bike não encontrada.')
+    }
+
 }
