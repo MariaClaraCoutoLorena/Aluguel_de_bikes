@@ -20,7 +20,7 @@ export class App {
         }
         user.id = crypto.randomUUID()
         this.users.push(user)
-        console.log("User cadastrado com sucessor!")
+        console.log("User cadastrado com sucesso!")
     }
 
     registerBike(bike: Bike): void {
@@ -35,18 +35,18 @@ export class App {
             bike.id = crypto.randomUUID() 
         }
         this.bikes.push(bike)
-        console.log("Bike cadastrada com sucessor!")
+        console.log("Bike cadastrada com sucesso!")
     }
     removeUser(user: User): void {
         let index = this.users.indexOf(user)
-        if(index) this.users.splice(index,1)
+        if(index!=undefined) this.users.splice(index,1)
         else throw new Error('Usuário não encontrada.')
         console.log("User retirado do sistema!")
     }
 
     removeBike(bike: Bike): void {
         let index = this.bikes.indexOf(bike)
-        if(index) this.bikes.splice(index,1)
+        if(index!=undefined) this.bikes.splice(index,1)
         else  throw new Error('Bike não encontrada.')
         console.log("Bike retirada do sistema!")
     }
@@ -59,11 +59,15 @@ export class App {
     }
 
     returnBike(bike: Bike): void{
-        let rent_bike = this.rents.find((rent) => {rent.bike == bike})
+        let index = this.bikes.indexOf(bike)
+        if(index==undefined) throw new Error('Bike não encontrada.')
+        let rent_bike = undefined; 
+        for(let i =0; i< this.rents.length;i++){
+            if(this.rents[i].bike == bike && this.rents[i].dateReturned==undefined) rent_bike = this.rents[i]
+        }
         if(rent_bike){
             rent_bike.dateReturned = new Date()
-            console.log("Bike entregue com sucesso!")
-            if( rent_bike.dateReturned>rent_bike.dateTo) console.log("Mas tome cuidado para não atrasar de novo!")
+            console.log("Bike entregue com sucesso" + (rent_bike.dateReturned>rent_bike.dateTo? ", mas tome cuidado para não atrasar de novo!": "!") )
         } else throw new Error('Essa bike não estava reservada.')
     }
 
